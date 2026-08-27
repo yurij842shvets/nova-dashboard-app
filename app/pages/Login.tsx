@@ -1,6 +1,7 @@
 import { LogIn, Mail, Lock } from "lucide-react";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
+import GoogleButton from "../ui/GoogleButton";
 
 export default function Login() {
   return (
@@ -20,7 +21,8 @@ export default function Login() {
       </div>
 
       <div className="w-full rounded-3xl border border-[#27272A] bg-[#111113] p-13">
-        {/* <div>google</div> */}
+       
+        <GoogleButton/>
 
         <div className="my-12 flex items-center gap-5">
           <div className="h-px flex-1 bg-[#27272A]" />
@@ -34,9 +36,9 @@ export default function Login() {
           <label htmlFor="" className="mb-4 block text-[22px] font-medium">Email</label>
 
           <div className="relative">
-            <Mail color="#b1afaf" />
+            <Mail color="#b1afaf" className="absolute left-4 top-1/2 -translate-y-1/2" />
 
-            <Input />
+            <Input placeholder="you@example.com" className="pl-12"/>
           </div>
         </div>
 
@@ -50,9 +52,9 @@ export default function Login() {
           </div>
 
           <div className="relative">
-            <Lock color="#b1afaf" />
+            <Lock color="#b1afaf" className="absolute left-4 top-1/2 -translate-y-1/2"/>
 
-            <Input />
+            <Input placeholder="••••••••" className="pl-12"/>
           </div>
 
           <button className="mt-7 h-19 w-full bg-[#9B5DE5] text-[23px] font-medium text-white transition-colors hover:bg-[#8B4DD5] rounded-2xl">
