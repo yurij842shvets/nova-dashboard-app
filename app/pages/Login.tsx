@@ -1,6 +1,7 @@
 import { LogIn, Mail, Lock } from "lucide-react";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
+import Label from "../ui/Label";
 import GoogleButton from "../ui/GoogleButton";
 
 export default function Login() {
@@ -33,7 +34,7 @@ export default function Login() {
         </div>
 
         <div>
-          <label htmlFor="" className="mb-4 block text-[22px] font-medium">Email</label>
+          <Label className="mb-4 block text-[22px] font-medium pt-2">Email</Label>
 
           <div className="relative">
             <Mail color="#b1afaf" className="absolute left-4 top-1/2 -translate-y-1/2" />
@@ -44,11 +45,11 @@ export default function Login() {
 
         <div>
           <div className="flex items-center justify-between">
-            <label htmlFor="" className="mb-4 block text-[22px] font-medium">Password</label>
+            <Label className="mb-4 block text-[22px] font-medium pt-2">Password</Label>
 
-            <button className="text-[19px] text-[#9B5DE5] transition-colors hover:text-[#B47AF0]">
+            <Button className="text-[19px] text-[#9B5DE5] transition-colors hover:text-[#B47AF0]">
               Forgot password?
-            </button>
+            </Button>
           </div>
 
           <div className="relative">
@@ -57,17 +58,17 @@ export default function Login() {
             <Input placeholder="••••••••" className="pl-12"/>
           </div>
 
-          <button className="mt-7 h-19 w-full bg-[#9B5DE5] text-[23px] font-medium text-white transition-colors hover:bg-[#8B4DD5] rounded-2xl">
+          <Button className="mt-7 h-19 w-full bg-[#9B5DE5] text-[23px] font-medium text-white transition-colors hover:bg-[#8B4DD5] rounded-2xl">
             Log in
-          </button>
+          </Button>
         </div>
       </div>
 
       <p className="mt-10 text-[20px] text-[#A1A1AA] text-center">
           Don't have an account?{" "}
-          <button className="text-[#9B5DE5] hover:text-[#B47AF0]">
+          <Button className="text-[#9B5DE5] hover:text-[#B47AF0]">
             Create one
-          </button>
+          </Button>
         </p>
     </form>
   );
