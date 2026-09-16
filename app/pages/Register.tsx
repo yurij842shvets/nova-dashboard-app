@@ -1,12 +1,65 @@
-import { UserPlus, Mail, Lock } from "lucide-react";
+"use client";
+
+import { UserPlus, Mail, Lock, FolderPen } from "lucide-react";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 import Label from "../ui/Label";
 import GoogleButton from "../ui/GoogleButton";
+import { useState } from "react";
 
 export default function Register() {
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmedPassword, setConfirmedPassword] = useState<string>("");
+
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setError("");
+
+    if (!name.trim || !email.trim() || !password || !confirmedPassword) {
+      setError("Please fill in all fields");
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Registration failed");
+        return;
+      }
+
+      console.log("REGISTER SUCCESS:", data);
+    } catch (error) {
+      console.error("Register error:", error);
+      setError("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <form className="mx-auto w-full max-w-140 py-10" action="">
+    <form
+      className="mx-auto w-full max-w-140 py-10"
+      action=""
+      onSubmit={handleRegister}
+    >
       <div className="mx-auto bg-[#d600d6] w-20 rounded-[18px] p-4">
         <UserPlus size={45} />
       </div>
@@ -34,6 +87,26 @@ export default function Register() {
 
         <div>
           <Label className="mb-4 block text-[22px] font-medium pt-2">
+            Name
+          </Label>
+
+          <div className="relative">
+            <FolderPen
+              color="#b1afaf"
+              className="absolute left-4 top-1/2 -translate-y-1/2"
+            />
+
+            <Input
+              placeholder="username"
+              className="pl-12"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div>
+          <Label className="mb-4 block text-[22px] font-medium pt-2">
             Email
           </Label>
 
@@ -43,7 +116,12 @@ export default function Register() {
               className="absolute left-4 top-1/2 -translate-y-1/2"
             />
 
-            <Input placeholder="you@example.com" className="pl-12" />
+            <Input
+              placeholder="you@example.com"
+              className="pl-12"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
         </div>
 
@@ -60,7 +138,12 @@ export default function Register() {
               className="absolute left-4 top-1/2 -translate-y-1/2"
             />
 
-            <Input placeholder="••••••••" className="pl-12" />
+            <Input
+              placeholder="••••••••"
+              className="pl-12"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
 
           <div>
@@ -74,7 +157,12 @@ export default function Register() {
                 className="absolute left-4 top-1/2 -translate-y-1/2"
               />
 
-              <Input placeholder="••••••••" className="pl-12" />
+              <Input
+                placeholder="••••••••"
+                className="pl-12"
+                value={confirmedPassword}
+                onChange={(e) => setConfirmedPassword(e.target.value)}
+              />
             </div>
           </div>
 
@@ -86,8 +174,12 @@ export default function Register() {
 
       <p className="mt-10 text-[20px] text-[#A1A1AA] text-center">
         Already have an account?{" "}
-        <Button className="text-[#9B5DE5] hover:text-[#B47AF0]">
-          Create one
+        <Button
+          className="text-[#9B5DE5] hover:text-[#B47AF0]"
+          type="submit"
+          disabled={loading}
+        >
+          {loading ? "Creating account..." : "Create account"}
         </Button>
       </p>
     </form>

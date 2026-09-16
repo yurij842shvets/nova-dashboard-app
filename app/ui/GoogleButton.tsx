@@ -8,7 +8,7 @@ export default function GoogleButton() {
   return (
     <Button
       type="button"
-      onClick={() => signIn("google")}
+      onClick={() => { console.log("GOOGLE BUTTON CLICKED"); signIn("google")}}
       className="h-16 w-full gap-3 rounded-2xl border border-[#27272A] bg-white text-[20px] text-black hover:bg-[#F4F4F5]"
     >
       <FcGoogle size={24}/>
