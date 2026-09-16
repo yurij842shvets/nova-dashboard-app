@@ -14,7 +14,7 @@ export default function Register() {
   const [confirmedPassword, setConfirmedPassword] = useState<string>("");
 
   const [error, setError] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,7 +25,7 @@ export default function Register() {
       setError("Please fill in all fields");
     }
 
-    setLoading(true);
+    setIsLoading(true);
 
     try {
       const response = await fetch("/api/register", {
@@ -50,7 +50,7 @@ export default function Register() {
       console.error("Register error:", error);
       setError("Something went wrong");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -177,9 +177,9 @@ export default function Register() {
         <Button
           className="text-[#9B5DE5] hover:text-[#B47AF0]"
           type="submit"
-          disabled={loading}
+          disabled={isLoading}
         >
-          {loading ? "Creating account..." : "Create account"}
+          {isLoading ? "Creating account..." : "Create account"}
         </Button>
       </p>
     </form>
