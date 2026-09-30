@@ -1,7 +1,7 @@
 import { Sparkles, Sun, CircleUserRound } from "lucide-react";
 import { NAVIGATION, SIDEBAR_BOTTOM } from "@/data/navigation";
 import Link from "next/link";
-import Button from "./Button";
+import Button from "../ui/Button";
 
 export default function Sidebar() {
   return (

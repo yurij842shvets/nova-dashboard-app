@@ -7,7 +7,11 @@ import bcrypt from "bcryptjs";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  providers: [Google,
+  session: {
+    strategy: "jwt",
+  },
+  providers: [
+    Google,
     Credentials({
       credentials: {
         email: {},
@@ -15,39 +19,39 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
 
       async authorize(credentials) {
-        if(!credentials?.email || !credentials?.password) {
-          return null
+        if (!credentials?.email || !credentials?.password) {
+          return null;
         }
 
-        const email = String(credentials.email).trim().toLowerCase()
-        const password = String(credentials.password)
+        const email = String(credentials.email).trim().toLowerCase();
+        const password = String(credentials.password);
 
         const user = await prisma.user.findUnique({
           where: {
             email,
-          }
-        })
+          },
+        });
 
-        if(!user || !user.passwordHash) {
-          return null
+        if (!user || !user.passwordHash) {
+          return null;
         }
 
         const isPasswordCorrect = await bcrypt.compare(
           password,
-          user.passwordHash
-        )
+          user.passwordHash,
+        );
 
-        if(!isPasswordCorrect) {
-          return null
+        if (!isPasswordCorrect) {
+          return null;
         }
 
         return {
           id: user.id,
           name: user.name,
           email: user.email,
-          image: user.image
-        }
-      }
-    })
+          image: user.image,
+        };
+      },
+    }),
   ],
 });
